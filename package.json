@@ -1,0 +1,30 @@
+{
+  "name": "xtens-transact",
+  "version": "1.0.0",
+  "description": "A module to handle transactional CRUD operations on the XTENS repository",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/biolab-unige/xtens-transact.git"
+  },
+  "keywords": [
+    "xtens"
+  ],
+  "author": "Massimiliano Izzo",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/biolab-unige/xtens-transact/issues"
+  },
+  "homepage": "https://github.com/biolab-unige/xtens-transact",
+  "dependencies": {
+    "knex": "^0.7.3",
+    "pg": "^4.1.0"
+  },
+  "devDependencies": {
+    "chai": "^1.10.0",
+    "mocha": "^2.0.1"
+  }
+}
