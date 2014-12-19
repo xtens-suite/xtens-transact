@@ -20,8 +20,12 @@
   },
   "homepage": "https://github.com/biolab-unige/xtens-transact",
   "dependencies": {
+    "bluebird": "^2.4.0",
     "knex": "^0.7.3",
-    "pg": "^4.1.0"
+    "lodash": "^2.4.1",
+    "pg": "^4.1.0",
+    "sinon": "^1.12.2",
+    "xtens-fs": "git+https://github.com/biolab-unige/xtens-fs.git"
   },
   "devDependencies": {
     "chai": "^1.10.0",
