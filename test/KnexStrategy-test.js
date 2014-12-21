@@ -15,13 +15,9 @@ var dataObj = {
         {uri: "/another/path/to/file02.ext"},
         {uri: "/yet/another/path/to/file03.ext"}
     ],
-    type: {
-        id: 1,
-        name: 'testDataType',
-        schema: {}
-    },
+    type: 2,
     acquisitionDate: new Date(),
-    tags: ["test", "knex test"],
+    tags: null,
     notes: "let me test you with knex",
     metadata: {
         attribute1: { value: ["test value"]},
@@ -36,8 +32,9 @@ describe('KnexStrategy', function() {
 
     describe('#constructor', function() {
 
+        
         it ("should create a new knex object with the proper connection", function() {
-            var strategy = new KnexStrategy(dbConnection);
+            var strategy = new KnexStrategy(dbConnection, fsConnection);
             expect(strategy.knex).to.exist;
             expect(strategy.knex).to.have.property('select');
             expect(strategy.knex).to.have.property('insert');
@@ -49,11 +46,24 @@ describe('KnexStrategy', function() {
     describe('#createData', function() {
 
         var strategy = new KnexStrategy(dbConnection, fsConnection);
+        
+        before(function() {
+            return strategy.knex('data').truncate()
+            .then(function() {
+                strategy.knex("data_file").truncate();
+            }).then(function() {
+                console.log("tables truncated");
+            });
+        });
 
         it("# should create the proper query strategy", function() {
             var mock = sinon.mock(FileSystemManager.prototype);
-
-            strategy.createData(dataObj);
+            var dataTypeName = "testDataType";
+            return strategy.createData(dataObj, dataTypeName).then(function() {
+                console.log("done");
+            }).catch(function(err) {
+                console.log("error");
+            }) ;
         });
     
     });
