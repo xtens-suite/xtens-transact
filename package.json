@@ -25,6 +25,7 @@
     "lodash": "^2.4.1",
     "pg": "^4.1.0",
     "sinon": "^1.12.2",
+    "validator": "^3.26.0",
     "xtens-fs": "git+https://github.com/biolab-unige/xtens-fs.git"
   },
   "devDependencies": {

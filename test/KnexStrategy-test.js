@@ -17,7 +17,7 @@ var dataObj = {
     ],
     type: 2,
     acquisitionDate: new Date(),
-    tags: null,
+    tags: ["tag", "another tag"],
     notes: "let me test you with knex",
     metadata: {
         attribute1: { value: ["test value"]},
