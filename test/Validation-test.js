@@ -13,7 +13,7 @@ describe("Validation", function() {
                     {uri: "/yet/another/path/to/file03.ext"}
                 ],
                 type: 2,
-                acquisitionDate: new Date(),
+                date: new Date(),
                 tags: ["tag", "another tag"],
                 notes: "let me test you with knex",
                 metadata: {
@@ -27,10 +27,13 @@ describe("Validation", function() {
             var errors = Validation.validateData(validData);
             expect(errors).to.be.null;
             delete validData.files;
-            delete validData.acquisitionDate;
+            delete validData.date;
             errors = Validation.validateData(validData);
             expect(errors).to.be.null;
             delete validData.tags;
+            errors = Validation.validateData(validData);
+            expect(errors).to.be.null;
+            validData.date = "2014-12-21";
             errors = Validation.validateData(validData);
             expect(errors).to.be.null;
             
@@ -39,7 +42,7 @@ describe("Validation", function() {
         it("should return an error message for date not valid", function() {
             var unformattedDateData = {
                 type: 2,
-                acquisitionDate: "11/122/198",
+                date: "11/122/198",
                 tags: ["tag", "another tag"],
                 notes: "let me test you with knex",
                 metadata: {
@@ -59,7 +62,7 @@ describe("Validation", function() {
         it("should return an error message for date not valid", function() {
             var invalidTagsData = {
                 type: 2,
-                acquisitionDate: new Date(),
+                date: new Date(),
                 tags: "tag",
                 notes: "let me test you with knex",
                 metadata: {
@@ -85,7 +88,7 @@ describe("Validation", function() {
         it("should return an error message for missing and/or invalid metadata", function() {
             var invalidMetadataData = {
                 type: 2,
-                acquisitionDate: new Date(),
+                date: new Date(),
                 tags: ["tag"],
                 notes: "let me test you with knex",
                 parentData: undefined,

@@ -16,7 +16,7 @@ var dataObj = {
         {uri: "/yet/another/path/to/file03.ext"}
     ],
     type: 2,
-    acquisitionDate: new Date(),
+    date: new Date(),
     tags: ["tag", "another tag"],
     notes: "let me test you with knex",
     metadata: {
