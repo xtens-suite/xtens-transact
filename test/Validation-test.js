@@ -36,7 +36,7 @@ describe("Validation", function() {
             validData.date = "2014-12-21";
             errors = Validation.validateData(validData);
             expect(errors).to.be.null;
-            
+
         });
 
         it("should return an error message for date not valid", function() {
@@ -84,7 +84,7 @@ describe("Validation", function() {
             expect(errors[0]).to.have.string(Validation.INVALID_TAG);
 
         });
-        
+
         it("should return an error message for missing and/or invalid metadata", function() {
             var invalidMetadataData = {
                 type: 2,
@@ -110,6 +110,82 @@ describe("Validation", function() {
             expect(errors).to.have.length(1);
             expect(errors[0]).to.have.string(Validation.INVALID_METADATA);
         });
+    });
+
+    describe("validateSample", function() {
+
+        it("should return no error message with a valid Sample instance", function() {
+            var validSample = {
+                biobankCode: '080001',
+                biobank: 1,
+                files: [
+                    {uri: "/path/to/file01.ext"},
+                    {uri: "/another/path/to/file02.ext"},
+                    {uri: "/yet/another/path/to/file03.ext"}
+                ],
+                type: 2,
+                notes: "let me test you with knex",
+                metadata: {
+                    "attribute1": { "value": ["test value"]},
+                    "attribute2": { "value": [1.0], "unit": ["s"]}
+                },
+                donor: undefined,
+                parentSample: undefined,
+            };
+            var errors = Validation.validateSample(validSample);
+            expect(errors).to.be.null;
+            validSample.donor = 12;
+            errors = Validation.validateSample(validSample);
+            expect(errors).to.be.null;
+            validSample.parentSample = 100;
+            errors = Validation.validateSample(validSample);
+            expect(errors).to.be.null;
+        });
+
+    });
+
+    describe("validateSubject", function() {
+
+        it("should return no error message with a valid Subject instance", function() {
+            var validSubject = {
+                personalInfo: 1,
+                type: 1,
+                sex: 'M',
+                code: 'SUBJ-1',
+                tags: ['patient tag', 'another tag'],
+                notes: "patient notes",
+                metadata: {
+                    "attribute1": { "value": ["test value"]},
+                    "attribute2": { "value": [1.0], "unit": ["s"]}
+                }
+            };
+            var errors = Validation.validateSubject(validSubject);
+            expect(errors).to.be.null;
+            validSubject.sex = '';
+            errors = Validation.validateSubject(validSubject);
+            expect(errors).to.be.null;
+            expect(validSubject.sex).to.equal('N.D.');
+        });
+
+        it("should return an error message with invalid PersonalInfo ", function() {
+            var invalidPersonalInfoSubject = {
+                personalInfo: 'pippo',
+                type: 1,
+                sex: 'M',
+                code: 'SUBJ-1',
+                tags: ['patient tag', 'another tag'],
+                notes: "patient notes",
+                metadata: {
+                    "attribute1": { "value": ["test value"]},
+                    "attribute2": { "value": [1.0], "unit": ["s"]}
+                }
+            };
+            var errors = Validation.validateSubject(invalidPersonalInfoSubject);
+            expect(errors).to.have.length(1);
+            expect(errors[0]).to.have.string(Validation.INVALID_PERSONAL_INFO_ID);
+
+        });
+
     });
 
 });
