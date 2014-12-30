@@ -166,11 +166,10 @@ describe("Validation", function() {
             expect(errors).to.be.null;
             expect(validSubject.sex).to.equal('N.D.');
         });
-
-        it("should return an error message with invalid PersonalInfo ", function() {
-            var invalidPersonalInfoSubject = {
-                personalInfo: 'pippo',
-                type: 1,
+        
+        it("should return an error message with invalid DataType ", function() {
+            var invalidDataTypeSubject = {
+                type: -1,
                 sex: 'M',
                 code: 'SUBJ-1',
                 tags: ['patient tag', 'another tag'],
@@ -180,9 +179,9 @@ describe("Validation", function() {
                     "attribute2": { "value": [1.0], "unit": ["s"]}
                 }
             };
-            var errors = Validation.validateSubject(invalidPersonalInfoSubject);
+            var errors = Validation.validateSubject(invalidDataTypeSubject);
             expect(errors).to.have.length(1);
-            expect(errors[0]).to.have.string(Validation.INVALID_PERSONAL_INFO_ID);
+            expect(errors[0]).to.have.string(Validation.INVALID_DATA_TYPE_ID);
 
         });
 
