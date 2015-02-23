@@ -3,6 +3,45 @@ var Validation = require('./../lib/Validation.js');
 
 describe("Validation", function() {
 
+    describe("validDataType", function() {
+        it("should return no error message with a valid Data Type instance", function() {
+            
+            var validDataType = {
+                name: "Valid Name",
+                schema: {
+                    "header": {"name": "Valid Name", "description": "Valid DataType Description" },
+                    "body": []
+                },
+                model: "Data",
+                parents: [1, 3, 5]
+            };
+            var errors = Validation.validateDataType(validDataType);
+            expect(errors).to.be.null;
+            validDataType.model = "Subject";
+            errors = Validation.validateDataType(validDataType);
+            expect(errors).to.be.null;
+            validDataType.model = "Sample";
+            errors = Validation.validateDataType(validDataType);
+            expect(errors).to.be.null;
+        });
+
+        it("should return no error message with a valid Data Type instance", function() {
+            
+            var invalidModelDataType = {
+                name: "Valid Name",
+                schema: {
+                    "header": {"name": "Valid Name", "description": "Valid DataType Description" },
+                    "body": []
+                },
+                model: "Wrongmodel",
+                parents: [1, 3, 5]
+            };
+            var errors = Validation.validateDataType(invalidModelDataType);
+            expect(errors).to.have.length(1);
+            expect(errors[0]).to.have.string(Validation.INVALID_DATA_TYPE_MODEL);
+        });
+    });
+
     describe("validateData", function() {
 
         it("should return no error message with a valid Data instance", function() {
